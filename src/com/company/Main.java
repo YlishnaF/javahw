@@ -1,106 +1,94 @@
 package com.company;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Main {
 
     public static void main(String[] args) {
+//        Задание 0
 
-    }
-//                   Задание 1
-    public static boolean isSumInRange(int a, int b) {
-        return (a + b) >= 10 && (a + b) <= 20;
-    }
-//                   Задание 2
-    public static void posOrNeg(int a) {
-        if (a >= 0) {
-            System.out.println("Положительное число");
-        } else {
-            System.out.println("Отрицательное число");
-        }
-    }
-//                   Задание 3
-    public static boolean negTrue(int a){
-        return a<=0;
-    }
+        // interface Collection
+        Collection<Integer> intCol = new ArrayList<>();
+        intCol.add(2);
+        intCol.add(14);
+        System.out.println("Collection коллекция: " + intCol);
+        intCol.remove(14);
+        System.out.println("удалили значение 14: " + intCol + "\n");
 
-//                   Задание 4
-    public static void printSomeTimes(String s, int a){
-        for (int i = 0; i < a; i++) {
-            System.out.println(s);
-        }
-    }
 
-//                   Задание 5
-    public static boolean checkYear(int year){
-        return year % 100 == 0 || year % 4 == 0;
-    }
+        // interface List
+        List<Integer> intList = new LinkedList<>();
+        intList.add(12);
+        intList.add(29);
+        System.out.println("List коллекция: " + intList);
+        System.out.println("удалили элемент по индексу 1: " + intList.remove(1));
+        System.out.println("получили элемент по индексу 0: " + intList.get(0) + "\n");
 
-//                   Задание 6
-    public static int[] changeOneZero(int[] mas){
-        int [] nMas = new int [mas.length];
-        for (int i = 0; i < mas.length; i++) {
-            if(mas[i]==0){
-                nMas[i]=1;
-            } else nMas[i]=0;
-        }
-        return nMas;
-    }
-//                   Задание 7
-    public static int[] createMasTill100(){
-        int []mas = new int [100];
-        for (int i = 0; i < 100; i++) {
-            mas[i] = i+1;
-        }
-        return mas;
-    }
-//                   Задание 8
-    public static int [] multTwo(){
-        int[] m = new int[] { 1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1 };
-        for (int i = 0; i < m.length; i++) {
-            if(m[i]<6){
-                m[i]=m[i]*2;
-            }
-        }
-        return m;
+        //interface Queue
+        Queue<Integer> integerQueue = new LinkedList<>();
+        integerQueue.add(13);
+        integerQueue.add(234);
+        integerQueue.add(34);
+        System.out.println("Queue коллекция: " + integerQueue);
+        integerQueue.remove(13);
+        System.out.println("удалили значение 13: " + integerQueue);
+        System.out.println("получили первый элемент: " + integerQueue.peek());
+        System.out.println("получили и удалили первый элемент: " + integerQueue.poll() + "\n");
+
+        //interface Deque
+        Deque<Integer> integerDeque = new ArrayDeque<>();
+        integerDeque.add(67);
+        integerDeque.addFirst(21);
+        integerDeque.offerFirst(25);
+        integerDeque.addLast(2);
+        System.out.println("Deque коллекция: " + integerDeque);
+        integerDeque.remove(21);
+        System.out.println("удалили значение 21: " + integerDeque);
+        System.out.println("получили первый элемент: " + integerDeque.peek());
+        System.out.println("получили и удалили первый элемент: " + integerDeque.poll());
+
+        //Задание 1
+        readConsole();
+
+        //Задание 2
+        LinkedList<Integer> integers = new LinkedList<>();
+        integers.add(2);
+        integers.add(3);
+        integers.add(4);
+        System.out.println("Начальный список: " + integers + ". Перевернутый список: " + reverse(integers));
     }
 
-//                   Задание 9
-    public static void doubleMas(){
-        int[][] mas = new int[5][5];
-        for (int i = 0; i < mas.length; i++) {
-            for (int j = 0; j < mas[i].length; j++) {
-                if(i==j){
-                    mas[i][j]=1;
-                } else {
-                    mas[i][j]=0;
+    //      Задание 1
+    public static void readConsole() throws IndexOutOfBoundsException {
+        List<String> strings = new LinkedList<>();
+        Scanner console = new Scanner(System.in);
+        String line = null;
+        while (!(line = console.nextLine()).equals("break")) {
+            String s = line.split("~")[0];
+            int i = Integer.parseInt(line.split("~")[1]);
+            if (s.equals("print")) {
+                try {
+                    System.out.println(strings.remove(i));
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Нет элемента");
                 }
-                System.out.print(mas[i][j]);
+            } else {
+                try {
+                    strings.add(i, s);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Невозможно вставить на указанный индекс, размер массива: " + strings.size());
+                }
             }
-            System.out.println();
         }
-    }
-//                   Задание 10
-    public static int[] createMas(int len, int initialValue){
-        int [] mas = new int[len];
-        for (int i = 0; i < len; i++) {
-            mas[i]=initialValue;
-        }
-        return mas;
     }
 
-//                   Задание 11
-    public static void findMinMax(int[] m){
-        int min=m[0];
-        int max =m[0];
-        for (int i = 1; i < m.length; i++) {
-            if (m[i]>max) {
-                max=m[i];
-            }
-            if(m[i]<min){
-                min=m[i];
-            }
+    //  Задание 2
+    private static <T> List<T> reverse(LinkedList<T> source) {
+        LinkedList<T> newList = new LinkedList<>();
+        for (int i = source.size() - 1; i >= 0; i--) {
+            newList.add(source.get(i));
         }
-        System.out.printf("min - %d, max - %d", min, max);
+        return newList;
     }
 }
